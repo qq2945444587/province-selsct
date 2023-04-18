@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title></title>
+		<link rel="stylesheet" href="css/index.css">
+		<link rel="stylesheet" type="text/css" href="https://unpkg.com/mobile-select@latest/dist/style/mobile-select.css" />
+		<script type="text/javascript" src="https://unpkg.com/mobile-select@latest/dist/mobile-select.iife.min.js"></script>
+		
+	</head>
+	<body>
+		
+		<div id="citys" style="font-size: 30px;">全国</div>
+		<script src="js/city.js"></script>
+		<script>
+			var province_list = []
+			var city_list = []
+			for (var j in areaList.province_list) {
+			        province_list.push({id:j,proId:j.substring(0,2),value:areaList.province_list[j], childs:[]});
+			}
+			for (var j in areaList.city_list) {
+			        city_list.push({id:j, value:areaList.city_list[j], parentId:j.substring(0,2)});
+			}
+			province_list.forEach((e)=>{
+				city_list.forEach((k)=>{
+					if (e.proId == k.parentId) {
+						e.childs.push(k)
+					}
+				})
+			})
+			
+			
+			var mobileSelect = new MobileSelect({
+				trigger: '#citys',
+				title: '',
+				wheels: [
+				      {
+				        data:province_list,
+				      },
+				    ],
+			
+				position: [0],
+				onShow: function(instance) {
+					
+				},
+				onHide: function(instance) {
+					
+				},
+				 onChange: function (data) {
+					 console.log(data)
+					 var citys = document.getElementById('citys')
+					 console.log(citys)
+					 citys.innerText = data[1].value
+				},
+			});
+		</script>
+	</body>
+</html>
